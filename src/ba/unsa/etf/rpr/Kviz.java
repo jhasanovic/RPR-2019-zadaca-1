@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Kviz {
     String naziv;
@@ -44,5 +45,22 @@ public class Kviz {
                 throw new IllegalArgumentException("Ne možete dodati pitanje sa tekstom koji već postoji");
         }
         pitanja.add(pitanje);
+    }
+
+    @Override
+    public String toString() {
+        String s = null;
+        //izlistati cijelu listu
+        for(int i=0;i<pitanja.size();i++){
+        s=s+(i+1)+pitanja.get(i).getTekst()+"("+pitanja.get(i).getBrojPoena()+"b)\n";
+        //prodjemo kroz mapu sa odgovorima
+            for (Map.Entry<String, Odgovor> m : pitanja.get(i).odgovori.entrySet()) {
+                s = s + m.getKey()+": ";
+                if(m.getValue().isTacno())
+                    s=s+m.getValue().getTekstOdgovora()+"(T)\n";
+                else s=s+m.getValue().getTekstOdgovora();
+            }
+        }
+        return s;
     }
 }

@@ -12,7 +12,6 @@ public class Pitanje {
         this.brojPoena = brojPoena;
         odgovori=new HashMap<String,Odgovor>();
     }
-
     public String getTekst() {
         return tekst;
     }
