@@ -108,6 +108,11 @@ public class Pitanje {
 
     @Override
     public String toString() {
-        return tekst +"("+brojPoena+"b)\n";
+        String s = tekst +"("+brojPoena+"b)\n";
+        //istresemo citavu mapu u string
+        for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
+            s=s+m.getKey()+": "+m.getValue()+"\n";
+        }
+        return s;
     }
 }
