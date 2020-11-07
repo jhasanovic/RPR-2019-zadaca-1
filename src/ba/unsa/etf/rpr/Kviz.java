@@ -39,5 +39,10 @@ public class Kviz {
     }
 
     public void dodajPitanje(Pitanje pitanje) {
+        for (Pitanje p : pitanja) {
+            if (p.getTekst().equalsIgnoreCase(pitanje.getTekst()))
+                throw new IllegalArgumentException("Ne možete dodati pitanje sa tekstom koji već postoji");
+        }
+        pitanja.add(pitanje);
     }
 }
