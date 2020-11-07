@@ -9,7 +9,7 @@ public class Odgovor {
         this.tacno = tacno;
     }
 
-    public String getTekst() {
+    public String getTekstOdgovora() {
         return tekst;
     }
 
@@ -17,7 +17,7 @@ public class Odgovor {
         return tacno;
     }
 
-    public void setTekst(String tekst) {
+    public void setTekstOdgovora(String tekst) {
         this.tekst = tekst;
     }
 

@@ -37,4 +37,7 @@ public class Kviz {
     public void setSistemBodovanja(SistemBodovanja sistemBodovanja) {
         this.sistemBodovanja = sistemBodovanja;
     }
+
+    public void dodajPitanje(Pitanje pitanje) {
+    }
 }
