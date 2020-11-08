@@ -41,7 +41,7 @@ public class Pitanje {
     }
 
     public void obrisiOdgovor(String id) {
-        if(odgovori.containsKey(id)==false) throw new IllegalArgumentException("Id odgovora mora biti jedinstven");
+        if(odgovori.containsKey(id)==false) throw new IllegalArgumentException("Odgovor s ovim id-em ne postoji");
         odgovori.remove(id);
     }
 
