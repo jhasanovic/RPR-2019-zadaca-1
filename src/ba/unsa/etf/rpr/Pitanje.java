@@ -53,11 +53,12 @@ public class Pitanje {
 
     public double izracunajPoene(List<String> lista, SistemBodovanja sistemBodovanja) {
         double ukupniPoeni=0;
-        //Collections.sort(lista);
 
-        for(int i=0;i<lista.size()-1;i++){
-            if(lista.get(i).equals(lista.get(i + 1)))
-                throw new IllegalArgumentException("Postoje duplikati među odabranim odgovorima");
+        for(int i=0;i<lista.size();i++){
+            for(int j=i+1;j<lista.size();j++) {
+                if (lista.get(i).equals(lista.get(j)))
+                    throw new IllegalArgumentException("Postoje duplikati među odabranim odgovorima");
+            }
         }
         for(int i=0;i<lista.size();i++) {
             if(odgovori.containsKey(lista.get(i))==false) throw new IllegalArgumentException("Odabran je nepostojeći odgovor");
