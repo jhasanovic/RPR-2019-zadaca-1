@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class RezultatKviza {
@@ -43,4 +42,5 @@ public class RezultatKviza {
         }
         return s;
     }
+
 };
