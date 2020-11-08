@@ -109,10 +109,13 @@ public class Pitanje {
 
     @Override
     public String toString() {
-        String s = tekst +"("+brojPoena+"b)\n";
-        //istresemo citavu mapu u string
-        for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
-            s=s+m.getKey()+": "+m.getValue()+"\n";
+        String s = tekst +"("+brojPoena+"b)\n\t";
+        Iterator<Map.Entry<String, Odgovor>> it = odgovori.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<String, Odgovor> m = it.next();
+            if(it.hasNext())
+            s=s+m.getKey()+": "+m.getValue().getTekstOdgovora()+"\n\t";
+            else s=s+m.getKey()+": "+m.getValue().getTekstOdgovora();
         }
         return s;
     }
