@@ -37,6 +37,7 @@ public class Pitanje {
     }
 
     public void dodajOdgovor(String id, String tekst, boolean tacno) {
+        if(odgovori.containsKey(id))throw new IllegalArgumentException("Id odgovora mora biti jedinstven");
         odgovori.put(id,new Odgovor(tekst,tacno));
     }
 
