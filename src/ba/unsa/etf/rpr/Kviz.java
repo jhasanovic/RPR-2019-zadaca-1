@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ public class Kviz {
     String naziv;
     List<Pitanje> pitanja;
     SistemBodovanja sistemBodovanja;
+    
 
     public Kviz(String naziv, SistemBodovanja sistemBodovanja) {
         this.naziv = naziv;
@@ -58,9 +60,24 @@ public class Kviz {
                 s = s + m.getKey()+": ";
                 if(m.getValue().isTacno())
                     s=s+m.getValue().getTekstOdgovora()+"(T)\n";
-                else s=s+m.getValue().getTekstOdgovora();
+                else s=s+m.getValue().getTekstOdgovora()+"\n";
             }
         }
         return s;
+    }
+
+    public RezultatKviza predajKviz(Map<Pitanje, ArrayList<String>> zaokruzeniOdgovori) {
+        Map<Pitanje,Double> pomocna=new HashMap<Pitanje,Double>();
+        double sumaPoena=0;
+        for (Map.Entry<Pitanje, ArrayList<String>> m : zaokruzeniOdgovori.entrySet()) {
+            sumaPoena = sumaPoena + m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
+            double brPoenaNaPitanju=m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
+            pomocna.put(m.getKey(),brPoenaNaPitanju);
+        }
+
+        RezultatKviza rezultat=new RezultatKviza(this);
+        rezultat.setTotal(sumaPoena);
+        rezultat.bodovi=pomocna;
+        return rezultat;
     }
 }
