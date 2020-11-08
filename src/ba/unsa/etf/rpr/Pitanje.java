@@ -45,8 +45,9 @@ public class Pitanje {
         odgovori.remove(id);
     }
 
-    public Map<String,Odgovor> dajListuOdgovora() {
-        return odgovori;
+    public List<Odgovor> dajListuOdgovora() {
+        List<Odgovor> lista=new ArrayList<Odgovor>(odgovori.values());
+        return lista;
     }
 
     public double izracunajPoene(List<String> lista, SistemBodovanja sistemBodovanja) {

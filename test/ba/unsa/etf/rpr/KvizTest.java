@@ -11,7 +11,7 @@ class KvizTest {
     private static Kviz kviz;
     private static List<Pitanje> pitanja;
 
-    @BeforeAll
+    @Test
     static void setUp(){
         Pitanje pitanje1 = new Pitanje("Koja od boja se moze naci na semaforu?", 3);
         pitanje1.dodajOdgovor("a", "zuta", true);
@@ -29,7 +29,7 @@ class KvizTest {
         pitanja.add(pitanje2);
     }
 
-    @BeforeEach
+    @Test
     void setUpTest(){
         kviz = new Kviz("Kviz opsteg znanja", SistemBodovanja.BINARNO);
         pitanja.forEach(pitanje -> kviz.dodajPitanje(pitanje));

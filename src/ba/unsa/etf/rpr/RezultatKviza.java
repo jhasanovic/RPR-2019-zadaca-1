@@ -28,8 +28,8 @@ public class RezultatKviza {
             this.total = total;
         }
 
-    public double getBodovi() {
-            return total;
+    public Map<Pitanje,Double> getBodovi() {
+            return bodovi;
     }
 
 };
