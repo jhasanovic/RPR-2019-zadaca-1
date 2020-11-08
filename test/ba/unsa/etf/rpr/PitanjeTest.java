@@ -187,8 +187,8 @@ class PitanjeTest {
         assertAll(
                 () -> assertEquals(1, poeni1),
                 () -> assertEquals(2, poeni2),
-                () -> assertEquals(2, poeni3),
-                () -> assertEquals(1, poeni4),
+                () -> assertEquals(0, poeni3),
+                () -> assertEquals(0, poeni4),
                 () -> assertEquals(0, poeni5)
         );
     }
@@ -207,7 +207,7 @@ class PitanjeTest {
         assertAll(
                 () -> assertEquals(0, poeni1),
                 () -> assertEquals(4, poeni2),
-                () -> assertEquals(3, poeni3)
+                () -> assertEquals(0, poeni3)
         );
     }
 

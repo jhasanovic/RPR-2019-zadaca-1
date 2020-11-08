@@ -53,7 +53,7 @@ public class Pitanje {
 
     public double izracunajPoene(List<String> lista, SistemBodovanja sistemBodovanja) {
         double ukupniPoeni=0;
-        Collections.sort(lista);
+        //Collections.sort(lista);
 
         for(int i=0;i<lista.size()-1;i++){
             if(lista.get(i).equals(lista.get(i + 1)))
@@ -81,28 +81,32 @@ public class Pitanje {
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO){
             int brojZaokruzenihTacnih=0;
             int brojTacnih=0;
+            int brojOdgovora=0;
             for (int i = 0; i < lista.size(); i++) {
-                if(odgovori.get(lista.get(i)).isTacno()) brojZaokruzenihTacnih++;
-                    else return 0;
+                if(!odgovori.get(lista.get(i)).isTacno()) return 0;
             }
             for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                 if(m.getValue().isTacno()) brojTacnih++;
+                brojOdgovora++;
             }
+            brojZaokruzenihTacnih=lista.size();
             if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni=brojPoena;
-            else ukupniPoeni = (brojPoena/brojTacnih)*brojZaokruzenihTacnih;
+            else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih;
         }
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO_SA_NEGATIVNIM){
             int brojZaokruzenihTacnih=0;
             int brojTacnih=0;
+            int brojOdgovora=0;
             for (int i = 0; i < lista.size(); i++) {
-                if(odgovori.get(lista.get(i)).isTacno()) brojZaokruzenihTacnih++;
-                else ukupniPoeni = -brojPoena/2;
+                if(!odgovori.get(lista.get(i)).isTacno()) return -brojPoena/2;
             }
             for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                 if(m.getValue().isTacno()) brojTacnih++;
+                brojOdgovora++;
             }
+            brojZaokruzenihTacnih=lista.size();
             if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni = brojPoena;
-            else ukupniPoeni = (brojPoena/brojTacnih)*brojZaokruzenihTacnih;
+            else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih;
         }
         return ukupniPoeni;
     }
