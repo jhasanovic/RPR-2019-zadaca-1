@@ -94,7 +94,9 @@ public class Kviz {
         double sumaPoena=0;
         for (Map.Entry<Pitanje, ArrayList<String>> m : zaokruzeniOdgovori.entrySet()) {
             sumaPoena = sumaPoena + m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
-            double brPoenaNaPitanju=m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
+            double brPoenaNaPitanju=0;
+            if(m.getValue().size()!=0)
+            brPoenaNaPitanju=m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
             pomocna.put(m.getKey(),brPoenaNaPitanju);
         }
 

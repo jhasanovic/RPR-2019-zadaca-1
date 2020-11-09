@@ -63,7 +63,7 @@ public class Pitanje {
         for(int i=0;i<lista.size();i++) {
             if(odgovori.containsKey(lista.get(i))==false) throw new IllegalArgumentException("Odabran je nepostojeći odgovor");
         }
-
+        if(lista.size()==0) return 0;
         if(sistemBodovanja==SistemBodovanja.BINARNO){
             if(lista.size()==0) return 0;
             else {
