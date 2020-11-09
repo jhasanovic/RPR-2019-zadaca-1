@@ -90,14 +90,27 @@ public class Kviz {
     }
 
     public RezultatKviza predajKviz(Map<Pitanje, ArrayList<String>> zaokruzeniOdgovori) {
+        //zaokruzeni odgovori sadrzi samo pitanja koja su odgovorena
+        //dodati neodgovorena
         Map<Pitanje,Double> pomocna=new HashMap<Pitanje,Double>();
         double sumaPoena=0;
-        for (Map.Entry<Pitanje, ArrayList<String>> m : zaokruzeniOdgovori.entrySet()) {
-            sumaPoena = sumaPoena + m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
-            double brPoenaNaPitanju=0;
-            if(m.getValue().size()!=0)
-            brPoenaNaPitanju=m.getKey().izracunajPoene(m.getValue(),sistemBodovanja);
-            pomocna.put(m.getKey(),brPoenaNaPitanju);
+        int i=0;
+        for(i=0;i<pitanja.size();i++){//provjeriti je li svako pitanja u mapi zaokruzeniOdgovori
+            if(!zaokruzeniOdgovori.containsKey(pitanja.get(i))){//ako nije dodati sa nula bodova
+                pomocna.put(pitanja.get(i),(double)0);
+            }
+            else{//pitanje jeste u zaokruzenim odgovorima
+                Iterator<Map.Entry<Pitanje, ArrayList<String>>> it = zaokruzeniOdgovori.entrySet().iterator();
+                while(it.hasNext()){
+                    Map.Entry<Pitanje, ArrayList<String>> entry=it.next();
+                    if(entry.getKey().getTekst().equals(pitanja.get(i).getTekst())){
+                        double brPoenaNaPitanju=pitanja.get(i).izracunajPoene(entry.getValue(), sistemBodovanja);
+                        sumaPoena = sumaPoena + brPoenaNaPitanju;
+                        pomocna.put(pitanja.get(i), brPoenaNaPitanju);
+                        break;
+                    }
+                }
+            }
         }
 
         RezultatKviza rezultat=new RezultatKviza(this);
@@ -105,4 +118,5 @@ public class Kviz {
         rezultat.bodovi=pomocna;
         return rezultat;
     }
+
 }

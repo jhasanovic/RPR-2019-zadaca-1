@@ -49,7 +49,6 @@ class KvizTest {
 
     @Test
     public void testKonstruktor2(){
-        kviz = new Kviz("Moj kviz", SistemBodovanja.PARCIJALNO);
         assertEquals(2, kviz.getPitanja().size());
     }
 
