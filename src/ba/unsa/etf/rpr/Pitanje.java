@@ -10,7 +10,7 @@ public class Pitanje {
     public Pitanje(String tekst, double brojPoena) {
         this.tekst = tekst;
         this.brojPoena = brojPoena;
-        odgovori=new HashMap<String,Odgovor>();
+        odgovori= new HashMap<>();
     }
     public String getTekst() {
         return tekst;
@@ -43,13 +43,12 @@ public class Pitanje {
     }
 
     public void obrisiOdgovor(String id) {
-        if(odgovori.containsKey(id)==false) throw new IllegalArgumentException("Odgovor s ovim id-em ne postoji");
+        if(!odgovori.containsKey(id)) throw new IllegalArgumentException("Odgovor s ovim id-em ne postoji");
         odgovori.remove(id);
     }
 
     public List<Odgovor> dajListuOdgovora() {
-        List<Odgovor> lista=new ArrayList<Odgovor>(odgovori.values());
-        return lista;
+        return new ArrayList<>(odgovori.values());
     }
 
     public double izracunajPoene(List<String> lista, SistemBodovanja sistemBodovanja) {
@@ -61,52 +60,47 @@ public class Pitanje {
                     throw new IllegalArgumentException("Postoje duplikati među odabranim odgovorima");
             }
         }
-        for(int i=0;i<lista.size();i++) {
-            if(odgovori.containsKey(lista.get(i))==false) throw new IllegalArgumentException("Odabran je nepostojeći odgovor");
+        for (String s : lista) {
+            if (!odgovori.containsKey(s)) throw new IllegalArgumentException("Odabran je nepostojeći odgovor");
         }
         if(lista.size()==0) return 0;
         if(sistemBodovanja==SistemBodovanja.BINARNO){
-            if(lista.size()==0) return 0;
-            else {
-                for (int i = 0; i < lista.size(); i++) {
-                    if(!odgovori.get(lista.get(i)).isTacno())
+            for (String s : lista) {
+                if (!odgovori.get(s).isTacno())
                     return 0;
-                }
+            }
                 int brojTacnih=0;
                 for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                     if(m.getValue().isTacno()) brojTacnih++;
                 }
                 if(brojTacnih==lista.size()) return brojPoena;
-            }
         }
 
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO){
-            int brojZaokruzenihTacnih=0;
+            int brojZaokruzenihTacnih=lista.size();
             int brojTacnih=0;
             int brojOdgovora=0;
-            for (int i = 0; i < lista.size(); i++) {
-                if(!odgovori.get(lista.get(i)).isTacno()) return 0;
+            for (String s : lista) {
+                if (!odgovori.get(s).isTacno()) return 0;
             }
             for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                 if(m.getValue().isTacno()) brojTacnih++;
                 brojOdgovora++;
             }
-            brojZaokruzenihTacnih=lista.size();
             if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni=brojPoena;
             else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih;
         }
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO_SA_NEGATIVNIM){
-            int brojZaokruzenihTacnih=0;
+            int brojZaokruzenihTacnih=lista.size();
             int brojTacnih=0;
             int brojOdgovora=0;
-            for (int i = 0; i < lista.size(); i++) {
-                if(!odgovori.get(lista.get(i)).isTacno()) return -brojPoena/2;
+            for (String s : lista) {
+                if (!odgovori.get(s).isTacno()) return -brojPoena / 2;
             }
             for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                 if(m.getValue().isTacno()) brojTacnih++;
                 brojOdgovora++;
             }
-            brojZaokruzenihTacnih=lista.size();
             if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni = brojPoena;
             else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih;
         }
@@ -115,15 +109,15 @@ public class Pitanje {
 
     @Override
     public String toString() {
-        String s = tekst +"("+brojPoena+"b)\n\t";
+        StringBuilder s = new StringBuilder(tekst + "(" + brojPoena + "b)\n\t");
         Iterator<Map.Entry<String, Odgovor>> it = odgovori.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<String, Odgovor> m = it.next();
             if(it.hasNext())
-            s=s+m.getKey()+": "+m.getValue().getTekstOdgovora()+"\n\t";
-            else s=s+m.getKey()+": "+m.getValue().getTekstOdgovora();
+            s.append(m.getKey()).append(": ").append(m.getValue().getTekstOdgovora()).append("\n\t");
+            else s.append(m.getKey()).append(": ").append(m.getValue().getTekstOdgovora());
         }
-        return s;
+        return s.toString();
     }
 
 }

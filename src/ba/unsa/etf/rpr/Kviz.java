@@ -11,7 +11,7 @@ public class Kviz {
     public Kviz(String naziv, SistemBodovanja sistemBodovanja) {
         this.naziv = naziv;
         this.sistemBodovanja = sistemBodovanja;
-        pitanja=new ArrayList<Pitanje>();
+        pitanja= new ArrayList<>();
     }
 
     public String getNaziv() {
@@ -48,65 +48,61 @@ public class Kviz {
 
     @Override
     public String toString() {
-        String s;
-        if(sistemBodovanja.name()=="BINARNO") s="Kviz \""+getNaziv()+"\" boduje se binarno"+". Pitanja:\n";
-        else if(sistemBodovanja.name()=="PARCIJALNO") s="Kviz \""+getNaziv()+"\" boduje se parcijalno"+". Pitanja:\n";
-        else s="Kviz \""+getNaziv()+"\" boduje se parcijalno sa negativnim bodovima"+". Pitanja:\n";
+        StringBuilder s;
+        if(sistemBodovanja.name().equals("BINARNO")) s = new StringBuilder("Kviz \"" + getNaziv() + "\" boduje se binarno" + ". Pitanja:\n");
+        else if(sistemBodovanja.name().equals("PARCIJALNO")) s = new StringBuilder("Kviz \"" + getNaziv() + "\" boduje se parcijalno" + ". Pitanja:\n");
+        else s = new StringBuilder("Kviz \"" + getNaziv() + "\" boduje se parcijalno sa negativnim bodovima" + ". Pitanja:\n");
 
         for(int i=0;i<pitanja.size();i++){
-            s=s+String.format("%d. ",i+1);
-        s=s+pitanja.get(i).getTekst()+"("+pitanja.get(i).getBrojPoena()+"b)\n\t";
+            s.append(String.format("%d. ", i + 1));
+        s.append(pitanja.get(i).getTekst()).append("(").append(pitanja.get(i).getBrojPoena()).append("b)\n\t");
             Iterator<Map.Entry<String, Odgovor>> it = pitanja.get(i).getOdgovori().entrySet().iterator();
             while(it.hasNext()){
                 Map.Entry<String, Odgovor> m = it.next();
-                s = s + m.getKey()+": ";
+                s.append(m.getKey()).append(": ");
                 if(i!=pitanja.size()-1) {
                     if(it.hasNext()) {
                         if (m.getValue().isTacno())
-                            s = s + m.getValue().getTekstOdgovora() + "(T)\n\t";
-                        else s = s + m.getValue().getTekstOdgovora() + "\n\t";
+                            s.append(m.getValue().getTekstOdgovora()).append("(T)\n\t");
+                        else s.append(m.getValue().getTekstOdgovora()).append("\n\t");
                     }
                     else{
                         if(m.getValue().isTacno())
-                            s = s + m.getValue().getTekstOdgovora() + "(T)\n\n";
-                        else s=s+m.getValue().getTekstOdgovora()+"\n\n";
+                            s.append(m.getValue().getTekstOdgovora()).append("(T)\n\n");
+                        else s.append(m.getValue().getTekstOdgovora()).append("\n\n");
                     }
                 }
                 else {
                     if(it.hasNext()) {
                         if (m.getValue().isTacno())
-                            s = s + m.getValue().getTekstOdgovora() + "(T)\n\t";
-                        else s = s + m.getValue().getTekstOdgovora() + "\n\t";
+                            s.append(m.getValue().getTekstOdgovora()).append("(T)\n\t");
+                        else s.append(m.getValue().getTekstOdgovora()).append("\n\t");
                     }
                     else{
                         if(m.getValue().isTacno())
-                            s = s + m.getValue().getTekstOdgovora() + "(T)";
-                        else s=s+m.getValue().getTekstOdgovora();
+                            s.append(m.getValue().getTekstOdgovora()).append("(T)");
+                        else s.append(m.getValue().getTekstOdgovora());
                     }
                 }
             }
         }
-        return s;
+        return s.toString();
     }
 
     public RezultatKviza predajKviz(Map<Pitanje, ArrayList<String>> zaokruzeniOdgovori) {
         //zaokruzeni odgovori sadrzi samo pitanja koja su odgovorena
         //dodati neodgovorena
-        Map<Pitanje,Double> pomocna=new HashMap<Pitanje,Double>();
+        Map<Pitanje,Double> pomocna= new HashMap<>();
         double sumaPoena=0;
-        int i=0;
-        for(i=0;i<pitanja.size();i++){//provjeriti je li svako pitanja u mapi zaokruzeniOdgovori
-            if(!zaokruzeniOdgovori.containsKey(pitanja.get(i))){//ako nije dodati sa nula bodova
-                pomocna.put(pitanja.get(i),(double)0);
-            }
-            else{//pitanje jeste u zaokruzenim odgovorima
-                Iterator<Map.Entry<Pitanje, ArrayList<String>>> it = zaokruzeniOdgovori.entrySet().iterator();
-                while(it.hasNext()){
-                    Map.Entry<Pitanje, ArrayList<String>> entry=it.next();
-                    if(entry.getKey().getTekst().equals(pitanja.get(i).getTekst())){
-                        double brPoenaNaPitanju=pitanja.get(i).izracunajPoene(entry.getValue(), sistemBodovanja);
+        for (Pitanje pitanje : pitanja) {//provjeriti je li svako pitanja u mapi zaokruzeniOdgovori
+            if (!zaokruzeniOdgovori.containsKey(pitanje)) {//ako nije dodati sa nula bodova
+                pomocna.put(pitanje, (double) 0);
+            } else {//pitanje jeste u zaokruzenim odgovorima
+                for (Map.Entry<Pitanje, ArrayList<String>> entry : zaokruzeniOdgovori.entrySet()) {
+                    if (entry.getKey().getTekst().equals(pitanje.getTekst())) {
+                        double brPoenaNaPitanju = pitanje.izracunajPoene(entry.getValue(), sistemBodovanja);
                         sumaPoena = sumaPoena + brPoenaNaPitanju;
-                        pomocna.put(pitanja.get(i), brPoenaNaPitanju);
+                        pomocna.put(pitanje, brPoenaNaPitanju);
                         break;
                     }
                 }

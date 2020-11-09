@@ -12,7 +12,7 @@ public class RezultatKviza {
         public RezultatKviza(Kviz kviz) {
             this.kviz = kviz;
             total=0;
-            bodovi=new HashMap<Pitanje,Double>();
+            bodovi= new HashMap<>();
         }
 
         public Kviz getKviz() {
@@ -41,18 +41,18 @@ public class RezultatKviza {
 
     @Override
     public String toString() {
-        String s=String.format("Na kvizu \""+kviz.getNaziv()+ "\" ostvarili ste ukupno %.1f poena. Raspored po pitanjima:\n",getTotal());
+        StringBuilder s= new StringBuilder(String.format("Na kvizu \"" + kviz.getNaziv() + "\" ostvarili ste ukupno %.1f poena. Raspored po pitanjima:\n", getTotal()));
         Iterator<Map.Entry<Pitanje, Double>> it = bodovi.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<Pitanje, Double> m = it.next();
-            s=s+m.getKey().getTekst();
-            s=s+String.format(" - %.1f",m.getValue());
+            s.append(m.getKey().getTekst());
+            s.append(String.format(" - %.1f", m.getValue()));
             if(it.hasNext()) {
-                s=s+"b\n";
+                s.append("b\n");
             }
-            else s=s+"b";
+            else s.append("b");
         }
-        return s;
+        return s.toString();
     }
 
 };
