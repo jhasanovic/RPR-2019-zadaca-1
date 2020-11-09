@@ -3,9 +3,9 @@ package ba.unsa.etf.rpr;
 import java.util.*;
 
 public class Pitanje {
-    String tekst;
-    double brojPoena;
-    Map<String,Odgovor> odgovori;
+    private String tekst;
+    private double brojPoena;
+    private Map<String,Odgovor> odgovori;
 
     public Pitanje(String tekst, double brojPoena) {
         this.tekst = tekst;
@@ -35,6 +35,7 @@ public class Pitanje {
     public void setOdgovori(Map<String,Odgovor> odgovori) {
         this.odgovori = odgovori;
     }
+
 
     public void dodajOdgovor(String id, String tekst, boolean tacno) {
         if(odgovori.containsKey(id))throw new IllegalArgumentException("Id odgovora mora biti jedinstven");

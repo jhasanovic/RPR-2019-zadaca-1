@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class RezultatKviza {
-    Kviz kviz;
-    double total;
-    Map<Pitanje,Double> bodovi;
+    private Kviz kviz;
+    private double total;
+    private Map<Pitanje,Double> bodovi;
 
         public RezultatKviza(Kviz kviz) {
             this.kviz = kviz;

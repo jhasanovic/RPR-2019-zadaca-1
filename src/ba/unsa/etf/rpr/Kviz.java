@@ -3,9 +3,9 @@ package ba.unsa.etf.rpr;
 import java.util.*;
 
 public class Kviz {
-    String naziv;
-    List<Pitanje> pitanja;
-    SistemBodovanja sistemBodovanja;
+    private String naziv;
+    private List<Pitanje> pitanja;
+    private SistemBodovanja sistemBodovanja;
     
 
     public Kviz(String naziv, SistemBodovanja sistemBodovanja) {
@@ -56,7 +56,7 @@ public class Kviz {
         for(int i=0;i<pitanja.size();i++){
             s=s+String.format("%d. ",i+1);
         s=s+pitanja.get(i).getTekst()+"("+pitanja.get(i).getBrojPoena()+"b)\n\t";
-            Iterator<Map.Entry<String, Odgovor>> it = pitanja.get(i).odgovori.entrySet().iterator();
+            Iterator<Map.Entry<String, Odgovor>> it = pitanja.get(i).getOdgovori().entrySet().iterator();
             while(it.hasNext()){
                 Map.Entry<String, Odgovor> m = it.next();
                 s = s + m.getKey()+": ";
@@ -115,7 +115,7 @@ public class Kviz {
 
         RezultatKviza rezultat=new RezultatKviza(this);
         rezultat.setTotal(sumaPoena);
-        rezultat.bodovi=pomocna;
+        rezultat.setBodovi(pomocna);
         return rezultat;
     }
 

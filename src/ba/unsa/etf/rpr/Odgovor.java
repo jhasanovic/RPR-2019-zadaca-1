@@ -3,8 +3,8 @@ package ba.unsa.etf.rpr;
 import java.util.Objects;
 
 public class Odgovor {
-    String tekst;
-    boolean tacno;
+    private String tekst;
+    private boolean tacno;
 
     public Odgovor(String tekst, boolean tacno) {
         this.tekst = tekst;
