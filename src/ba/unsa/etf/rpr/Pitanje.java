@@ -5,7 +5,7 @@ import java.util.*;
 public class Pitanje {
     private String tekst;
     private double brojPoena;
-    private Map<String,Odgovor> odgovori;
+    private Map<String,Odgovor> odgovori; //ID pitanja je key polje mape odgovori
 
     public Pitanje(String tekst, double brojPoena) {
         this.tekst = tekst;
@@ -63,23 +63,23 @@ public class Pitanje {
         for (String s : lista) {
             if (!odgovori.containsKey(s)) throw new IllegalArgumentException("Odabran je nepostojeći odgovor");
         }
-        if(lista.size()==0) return 0;
+        if(lista.size()==0) return 0; //ako na pitanje nije odgovoreno
+
         if(sistemBodovanja==SistemBodovanja.BINARNO){
             for (String s : lista) {
-                if (!odgovori.get(s).isTacno())
+                if (!odgovori.get(s).isTacno())//ako nađemo bar jedan netačan
                     return 0;
             }
                 int brojTacnih=0;
                 for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                     if(m.getValue().isTacno()) brojTacnih++;
                 }
+                //ako su svi tačni odgovori odabrani
                 if(brojTacnih==lista.size()) return brojPoena;
         }
 
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO){
-            int brojZaokruzenihTacnih=lista.size();
-            int brojTacnih=0;
-            int brojOdgovora=0;
+            int brojZaokruzenihTacnih=lista.size(),brojTacnih=0,brojOdgovora=0;
             for (String s : lista) {
                 if (!odgovori.get(s).isTacno()) return 0;
             }
@@ -87,15 +87,15 @@ public class Pitanje {
                 if(m.getValue().isTacno()) brojTacnih++;
                 brojOdgovora++;
             }
-            if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni=brojPoena;
-            else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih;
+            if(brojTacnih==brojZaokruzenihTacnih) ukupniPoeni=brojPoena; //ako su odabrani svi tačni
+            else ukupniPoeni = (brojPoena/brojOdgovora)*brojZaokruzenihTacnih; //ako nisu odabrani svi tačni
         }
         else if(sistemBodovanja==SistemBodovanja.PARCIJALNO_SA_NEGATIVNIM){
             int brojZaokruzenihTacnih=lista.size();
             int brojTacnih=0;
             int brojOdgovora=0;
             for (String s : lista) {
-                if (!odgovori.get(s).isTacno()) return -brojPoena / 2;
+                if (!odgovori.get(s).isTacno()) return -brojPoena / 2; //ako je odabran bar jedan netačan odgovor
             }
             for (Map.Entry<String, Odgovor> m : odgovori.entrySet()) {
                 if(m.getValue().isTacno()) brojTacnih++;

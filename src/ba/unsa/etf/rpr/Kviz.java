@@ -60,7 +60,9 @@ public class Kviz {
             while(it.hasNext()){
                 Map.Entry<String, Odgovor> m = it.next();
                 s.append(m.getKey()).append(": ");
+
                 if(i!=pitanja.size()-1) {
+
                     if(it.hasNext()) {
                         if (m.getValue().isTacno())
                             s.append(m.getValue().getTekstOdgovora()).append("(T)\n\t");
@@ -71,13 +73,17 @@ public class Kviz {
                             s.append(m.getValue().getTekstOdgovora()).append("(T)\n\n");
                         else s.append(m.getValue().getTekstOdgovora()).append("\n\n");
                     }
+
                 }
+
                 else {
+
                     if(it.hasNext()) {
                         if (m.getValue().isTacno())
                             s.append(m.getValue().getTekstOdgovora()).append("(T)\n\t");
                         else s.append(m.getValue().getTekstOdgovora()).append("\n\t");
                     }
+
                     else{
                         if(m.getValue().isTacno())
                             s.append(m.getValue().getTekstOdgovora()).append("(T)");
@@ -91,14 +97,13 @@ public class Kviz {
 
     public RezultatKviza predajKviz(Map<Pitanje, ArrayList<String>> zaokruzeniOdgovori) {
         //zaokruzeni odgovori sadrzi samo pitanja koja su odgovorena
-        //dodati neodgovorena
         Map<Pitanje,Double> pomocna= new HashMap<>();
         double sumaPoena=0;
-        for (Pitanje pitanje : pitanja) {//provjeriti je li svako pitanja u mapi zaokruzeniOdgovori
-            if (!zaokruzeniOdgovori.containsKey(pitanje)) {//ako nije dodati sa nula bodova
-                pomocna.put(pitanje, (double) 0);
-            } else {//pitanje jeste u zaokruzenim odgovorima
+        for (Pitanje pitanje : pitanja) {//provjeriti je li svako pitanje u mapi zaokruzeniOdgovori
+            if (!zaokruzeniOdgovori.containsKey(pitanje)) pomocna.put(pitanje, (double) 0);//pitanje neodgovoreno
+             else {//pitanje odgovoreno
                 for (Map.Entry<Pitanje, ArrayList<String>> entry : zaokruzeniOdgovori.entrySet()) {
+                    //trazimo pitanje u mapi koje odgovara trenutnom pitanju
                     if (entry.getKey().getTekst().equals(pitanje.getTekst())) {
                         double brPoenaNaPitanju = pitanje.izracunajPoene(entry.getValue(), sistemBodovanja);
                         sumaPoena = sumaPoena + brPoenaNaPitanju;
