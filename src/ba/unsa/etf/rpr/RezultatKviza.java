@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 public class RezultatKviza {
@@ -35,11 +35,16 @@ public class RezultatKviza {
 
     @Override
     public String toString() {
-        String s=String.format("Na kvizu "+kviz.getNaziv()+ " ostvarili ste ukupno %.1f poena. Raspored po pitanjima:\n",getTotal());
-        for (Map.Entry<Pitanje, Double> m : bodovi.entrySet()) {
-            s=s+m.getKey();
+        String s=String.format("Na kvizu \""+kviz.getNaziv()+ "\" ostvarili ste ukupno %.1f poena. Raspored po pitanjima:\n",getTotal());
+        Iterator<Map.Entry<Pitanje, Double>> it = bodovi.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<Pitanje, Double> m = it.next();
+            s=s+m.getKey().getTekst();
             s=s+String.format(" - %.1f",m.getValue());
-            s=s+"b\n";
+            if(it.hasNext()) {
+                s=s+"b\n";
+            }
+            else s=s+"b";
         }
         return s;
     }
