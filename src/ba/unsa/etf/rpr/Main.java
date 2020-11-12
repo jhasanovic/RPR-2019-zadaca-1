@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Main {
     private static Kviz kviz;
@@ -45,8 +44,35 @@ public class Main {
         pitanja.forEach(pitanje -> kviz.dodajPitanje(pitanje));
     }
 
+    public static void igrajKviz (Kviz k){
+    postavka();
 
+        System.out.println("Dobrodošli u "+kviz.getNaziv());
+        System.out.println("Kviz se sastoji od pet pitanja koja ukupno nose 10 bodova.");
+        System.out.println("Na pitanja odgovarate unosom slova koje odgovara željenom pitanju. Nakon svakog unosa pritisnite ENTER.");
+        System.out.println("Odgovor na pitanje završava se unosom \"0\". Moguće je i ne odgovoriti na ponuđeno pitanje. Sretno!\n\n");
+        Scanner ulaz=new Scanner(System.in);
+        Map<Pitanje, ArrayList<String>> zaokruzeniOdgovori=new HashMap<>();
+        // u mapu dodajem samo odgovorena pitanja
+        for (Pitanje pitanje : pitanja) {
+            System.out.println(pitanje.toString());
+            ArrayList<String> lista = new ArrayList<>();
+            char unos;
+            do {
+                unos = ulaz.next().charAt(0);
+                if (unos == 'a' || unos == 'b' || unos == 'c' || unos == 'd') {
+                    lista.add(String.valueOf(unos));
+                    ulaz.nextLine();
+                }
+            } while (unos != '0');
+            if (!lista.isEmpty())
+                zaokruzeniOdgovori.put(pitanje, lista);
+        }
+        RezultatKviza rezultat=kviz.predajKviz(zaokruzeniOdgovori);
+        System.out.println(rezultat.toString());
+
+    }
     public static void main(String[] args) {
-
+    igrajKviz(kviz);
     }
 }
