@@ -62,7 +62,6 @@ public class Main {
                 unos = ulaz.next().charAt(0);
                 if (unos == 'a' || unos == 'b' || unos == 'c' || unos == 'd') {
                     lista.add(String.valueOf(unos));
-                    ulaz.nextLine();
                 }
             } while (unos != '0');
             if (!lista.isEmpty())
