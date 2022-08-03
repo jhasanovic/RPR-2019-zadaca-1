@@ -6,7 +6,6 @@ public class Kviz {
     private String naziv;
     private List<Pitanje> pitanja;
     private SistemBodovanja sistemBodovanja;
-    
 
     public Kviz(String naziv, SistemBodovanja sistemBodovanja) {
         this.naziv = naziv;
